@@ -15,6 +15,11 @@ def extract_subdomain(host: str) -> str:
 
 async def resolve_tenant(request: Request, call_next):
     """Middleware to resolve tenant from subdomain."""
+    # Bypass tenant resolution for /health endpoint
+    if request.url.path == "/health":
+        response = await call_next(request)
+        return response
+    
     host = request.headers.get("host", "")
     subdomain = extract_subdomain(host)
     

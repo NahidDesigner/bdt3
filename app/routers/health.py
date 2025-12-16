@@ -1,14 +1,10 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter
 
 router = APIRouter()
 
 @router.get("/health")
-async def health(request: Request):
-    tenant = getattr(request.state, "tenant", None)
-    tenant_slug = tenant.slug if tenant else None
-    
+async def health():
     return {
-        "status": "ok",
-        "tenant": tenant_slug
+        "status": "ok"
     }
 
