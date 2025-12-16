@@ -1,12 +1,10 @@
 services:
   backend:
     build: .
-    ports:
-      - "8000:8000"
     environment:
       - DATABASE_URL=${DATABASE_URL}
     healthcheck:
-      test: ["CMD", "curl", "-s", "-o", "/dev/null", "http://localhost:8000/health", "-H", "Host: healthcheck.localhost"]
+      test: ["CMD", "curl", "-fsS", "http://localhost:8000/health", "-H", "Host: healthcheck.localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
